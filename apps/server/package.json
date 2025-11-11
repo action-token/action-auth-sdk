@@ -1,0 +1,29 @@
+{
+  "name": "aws-hono",
+  "type": "module",
+  "scripts": {
+    "dev": "sst dev --stage ihhp",
+    "dev:log": "sst dev --stage ihhp --print-logs",
+    "build": "esbuild --bundle --outfile=./dist/index.js --platform=node --target=node20 ./src/index.ts",
+    "zip": "zip -j lambda.zip dist/index.js",
+    "update": "aws lambda update-function-code --zip-file fileb://lambda.zip --function-name hello",
+    "deploy": "run-s build zip update",
+    "db:push": "drizzle-kit push"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "8.10.146",
+    "esbuild": "^0.21.4",
+    "npm-run-all2": "^6.2.0",
+    "drizzle-kit": "^0.30.5"
+  },
+  "dependencies": {
+    "@better-auth/expo": "^1.3.4",
+    "@libsql/client": "^0.15.10",
+    "better-auth": "^1.3.4",
+    "drizzle-orm": "^0.44.4",
+    "hono": "^4.9.0",
+    "sst": "v3.17.10",
+    "stellar-sdk": "^12.3.0",
+    "zod": "^4.0.17"
+  }
+}

@@ -1,9 +1,16 @@
 {
   "name": "action-auth-sdk",
   "type": "module",
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "peerDependencies": {
     "typescript": "^5.0.0"
-  }
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "trustedDependencies": [
+    "aws-sdk",
+    "unrs-resolver"
+  ]
 }
