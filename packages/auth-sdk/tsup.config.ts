@@ -13,13 +13,13 @@ export default defineConfig({
     "@creit.tech/stellar-wallets-kit",
     "stellar-sdk",
   ],
-  esbuildOptions(options) {
-    // Preserve CSS module imports as-is
-    options.loader = {
-      ...options.loader,
-      ".css": "css",
-    };
-  },
+  // esbuildOptions(options) {
+  //   // Preserve CSS module imports as-is
+  //   options.loader = {
+  //     ...options.loader,
+  //     ".css": "css",
+  //   };
+  // },
   splitting: false,
   // Don't use CSS loader - let it be handled by import
 });
