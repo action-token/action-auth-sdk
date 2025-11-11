@@ -1,7 +1,7 @@
 "use client";
 import type { BetterAuthClientPlugin } from "better-auth/client";
 import type { BetterFetchOption } from "@better-fetch/fetch";
-import { kit } from "../lib/kit/init";
+import { kit } from "../../lib/kit/init";
 
 type ChallengeResponse = {
   xdr: string;

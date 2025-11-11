@@ -1,6 +1,6 @@
 "use client";
 // Minimal Stellar client helper for all Stellar wallets using kit + Better Auth plugin endpoints
-import type { AuthClient } from "./auth-client";
+import type { AuthClient } from "../client/auth-client";
 import { kit } from "./kit/init";
 import {
   XBULL_ID,

@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { jwtVerify, createRemoteJWKSet } from "jose";
-import { BASE_URL } from "@/lib/utils";
+
+const BASE_URL =
+  "https://izghhhbd7grhvtqs22umfilgqm0twtjn.lambda-url.us-east-2.on.aws";
 
 const JWKS = createRemoteJWKSet(new URL(`${BASE_URL}/api/auth/jwks`));
 

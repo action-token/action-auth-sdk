@@ -1,7 +1,10 @@
 "use client";
-import { AuthModal } from "@/components/AuthModal";
+// import { AuthModal } from "@/components/AuthModal";
 import { authClient } from "@/lib/auth-client";
 import { useState } from "react";
+
+import { AuthModal } from "@action-auth/sdk";
+import "@action-auth/sdk/styles"; // ← Cleaner import!
 
 export function Login() {
   const [open, setOpen] = useState(true);

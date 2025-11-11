@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import type { createAuthClient } from "better-auth/react";
-import { authClient as defaultAuthClient } from "../lib/auth-client";
+import { authClient as defaultAuthClient } from "../client/auth-client";
 import {
   signInWithAlbedo,
   signInWithXBull,
