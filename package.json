@@ -1,0 +1,9 @@
+{
+  "name": "action-auth-sdk",
+  "type": "module",
+  "devDependencies": {
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
