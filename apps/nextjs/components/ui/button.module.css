@@ -1,0 +1,121 @@
+/* Button Component Styles */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  outline: none;
+}
+
+.button:focus {
+  outline: 2px solid var(--auth-primary);
+  outline-offset: 2px;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Variants */
+.primary {
+  background-color: var(--auth-primary);
+  color: var(--auth-primary-foreground);
+  border-color: var(--auth-primary);
+}
+
+.primary:hover:not(:disabled) {
+  background-color: var(--auth-primary);
+  opacity: 0.9;
+}
+
+.secondary {
+  background-color: var(--auth-secondary);
+  color: var(--auth-secondary-foreground);
+  border-color: var(--auth-secondary);
+}
+
+.secondary:hover:not(:disabled) {
+  background-color: var(--auth-secondary);
+  opacity: 0.8;
+}
+
+.outline {
+  background-color: transparent;
+  color: var(--auth-foreground);
+  border-color: var(--auth-border);
+}
+
+.outline:hover:not(:disabled) {
+  background-color: var(--auth-muted);
+  border-color: var(--auth-border-focus);
+}
+
+.ghost {
+  background-color: transparent;
+  color: var(--auth-foreground);
+  border-color: transparent;
+}
+
+.ghost:hover:not(:disabled) {
+  background-color: var(--auth-muted);
+}
+
+/* Sizes */
+.sm {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.75rem;
+  border-radius: 0.375rem;
+}
+
+.md {
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  border-radius: 0.5rem;
+}
+
+.lg {
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+}
+
+/* Full width */
+.fullWidth {
+  width: 100%;
+}
+
+/* Loading state */
+.loading {
+  pointer-events: none;
+}
+
+.loadingText {
+  opacity: 0.7;
+}
+
+.spinner {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

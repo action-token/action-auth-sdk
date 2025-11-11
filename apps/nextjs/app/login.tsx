@@ -1,7 +1,10 @@
 "use client";
+import { AuthModal } from "@/components/AuthModal";
 import { authClient } from "@/lib/auth-client";
+import { useState } from "react";
 
 export function Login() {
+  const [open, setOpen] = useState(true);
   const user = authClient.useSession();
   const handleLogin = () =>
     authClient.signIn
@@ -39,6 +42,12 @@ export function Login() {
     }
   };
 
+  // return (
+  //   <div>
+  //     <AuthModal open={open} onClose={() => setOpen(false)} />
+  //   </div>
+  // );
+
   return (
     <div>
       {user ? (
@@ -51,6 +60,7 @@ export function Login() {
       <div>
         <button onClick={handleApiCall}> call a nextjs api router</button>
       </div>
+      <AuthModal open={open} onClose={() => setOpen(false)} />
     </div>
   );
 }
