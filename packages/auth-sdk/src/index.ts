@@ -9,6 +9,9 @@ export { ConnectModal } from "./components/auth/ConnectModal";
 export { Button } from "./components/ui/button";
 export { ShadowDOMPortal } from "./components/ShadowDOMPortal";
 
+// Export icons for customization
+export * from "./components/icons";
+
 // Export helpers
 export * from "./lib/stellar";
 export { stellarClient } from "./client/plugins/stellar-client";

@@ -103,6 +103,7 @@ export default defineConfig({
     sourcemap: true,
     minify: false,
     emptyOutDir: true,
+    assetsInlineLimit: 10240, // Inline assets < 10KB as base64 for Shadow DOM
   },
   css: {
     modules: {

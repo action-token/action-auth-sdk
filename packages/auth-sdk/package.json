@@ -16,7 +16,9 @@
   },
   "files": ["dist"],
   "scripts": {
-    "build": "vite build"
+    "build": "vite build",
+    "pack": "npm pack",
+    "deploy": "bun run build && npm pack && cd ../../apps/nextjs && bun remove @action-auth/sdk && bun add ../../packages/auth-sdk/action-auth-sdk-0.1.0.tgz"
   },
   "peerDependencies": {
     "react": "^18.0.0",

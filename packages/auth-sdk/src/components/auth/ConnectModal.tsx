@@ -1,6 +1,16 @@
 "use client";
 import { useState } from "react";
 import { Button } from "../ui/button";
+import {
+  WalletIcons,
+  WalletIcon,
+  LinkIcon,
+  WalletIconSvg,
+  GlobeIcon,
+  GoogleIcon,
+  ShieldIcon,
+  ArrowRightIcon,
+} from "../icons";
 import styles from "./ConnectModal.module.css";
 
 interface Wallet {
@@ -14,23 +24,37 @@ interface Wallet {
 const STELLAR_WALLETS: Wallet[] = [
   {
     id: "xbull",
-    name: "xBull Wallet",
-    icon: "🐂",
-    description: "Browser extension wallet for Stellar",
+    name: "xBull",
+    icon: WalletIcons.xbull,
+    description: "Browser extension wallet",
     installed: true,
   },
   {
     id: "albedo",
     name: "Albedo",
-    icon: "🌟",
+    icon: WalletIcons.albedo,
     description: "Web-based Stellar wallet",
     installed: true,
   },
   {
     id: "lobstr",
     name: "Lobstr",
-    icon: "🦞",
+    icon: WalletIcons.lobstr,
     description: "Mobile and web wallet",
+    installed: true,
+  },
+  {
+    id: "freighter",
+    name: "Freighter",
+    icon: WalletIcons.freighter,
+    description: "Browser extension for Stellar",
+    installed: true,
+  },
+  {
+    id: "rabet",
+    name: "Rabet",
+    icon: WalletIcons.rabet,
+    description: "Browser extension wallet",
     installed: true,
   },
 ];
@@ -39,7 +63,7 @@ const SOCIAL_OPTIONS = [
   {
     id: "google",
     name: "Google",
-    icon: "🔍",
+    icon: "google",
     description: "Continue with your Google account",
   },
 ];
@@ -84,7 +108,9 @@ export function ConnectModal({
         <div className={styles.header}>
           <div className={styles.headerContent}>
             <div className={styles.iconContainer}>
-              <div className={styles.connectIcon}>🔗</div>
+              <div className={styles.connectIcon}>
+                <LinkIcon />
+              </div>
             </div>
             <h2 className={styles.title}>Connect Wallet</h2>
             <p className={styles.subtitle}>
@@ -108,7 +134,9 @@ export function ConnectModal({
             }`}
             onClick={() => setActiveTab("wallets")}
           >
-            <span className={styles.tabIcon}>👛</span>
+            <span className={styles.tabIcon}>
+              <WalletIconSvg />
+            </span>
             Stellar Wallets
           </button>
           <button
@@ -117,7 +145,9 @@ export function ConnectModal({
             }`}
             onClick={() => setActiveTab("social")}
           >
-            <span className={styles.tabIcon}>🌐</span>
+            <span className={styles.tabIcon}>
+              <GlobeIcon />
+            </span>
             Social Login
           </button>
         </div>
@@ -145,7 +175,9 @@ export function ConnectModal({
                     }
                     disabled={loading}
                   >
-                    <div className={styles.walletIcon}>{wallet.icon}</div>
+                    <div className={styles.walletIcon}>
+                      <WalletIcon src={wallet.icon} alt={wallet.name} />
+                    </div>
                     <div className={styles.walletInfo}>
                       <h4 className={styles.walletName}>{wallet.name}</h4>
                       <p className={styles.walletDescription}>
@@ -157,7 +189,9 @@ export function ConnectModal({
                         <div className={styles.spinner}></div>
                       </div>
                     )}
-                    <div className={styles.walletArrow}>→</div>
+                    <div className={styles.walletArrow}>
+                      <ArrowRightIcon />
+                    </div>
                   </button>
                 ))}
               </div>
@@ -181,7 +215,9 @@ export function ConnectModal({
                     onClick={() => handleSocialClick(option.id)}
                     className={styles.socialButton}
                   >
-                    <span className={styles.socialIcon}>{option.icon}</span>
+                    <span className={styles.socialIcon}>
+                      <GoogleIcon size={24} />
+                    </span>
                     Continue with {option.name}
                   </Button>
                 ))}
@@ -208,7 +244,9 @@ export function ConnectModal({
         {/* Footer */}
         <div className={styles.footer}>
           <div className={styles.securityNote}>
-            <span className={styles.shieldIcon}>🛡️</span>
+            <span className={styles.shieldIcon}>
+              <ShieldIcon />
+            </span>
             <span>Your connection is secure and encrypted</span>
           </div>
         </div>

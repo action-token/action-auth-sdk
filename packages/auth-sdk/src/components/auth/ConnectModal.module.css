@@ -358,10 +358,17 @@
 .socialButton {
   padding: 0.875rem 1rem;
   font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
 }
 
 .socialIcon {
-  font-size: 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 /* Divider */
