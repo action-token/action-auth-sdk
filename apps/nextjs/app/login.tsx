@@ -25,7 +25,7 @@ export function Login() {
     const token = await authClient.token();
     if (token.data) {
       const jwtToken = token.data.token;
-      console.log("JWT Token:", jwtToken);
+      // console.log("JWT Token:", jwtToken);
 
       const response = await fetch("/api/protected", {
         method: "GET",

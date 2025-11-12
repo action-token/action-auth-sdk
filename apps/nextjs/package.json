@@ -9,7 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@action-auth/sdk": "../../packages/auth-sdk/action-auth-sdk-0.1.0.tgz",
+    "@action-auth/sdk": "https://github.com/action-token/action-auth-sdk/releases/download/v0.1.0/action-auth-sdk-0.1.0.tgz",
     "@creit.tech/stellar-wallets-kit": "^1.9.5",
     "jose": "^6.1.1",
     "next": "16.0.1",
