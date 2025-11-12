@@ -3,73 +3,82 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
-  font-size: 0.875rem;
-  font-weight: 500;
+  gap: 0.625rem;
+  padding: 0.875rem 1.25rem;
+  border-radius: 0.75rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
   line-height: 1;
-  border: 1px solid transparent;
+  border: 1.5px solid transparent;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
   text-decoration: none;
   outline: none;
+  white-space: nowrap;
 }
 
-.button:focus {
-  outline: 2px solid var(--auth-primary);
+.button:focus-visible {
+  outline: 2px solid var(--auth-ring);
   outline-offset: 2px;
 }
 
 .button:disabled {
   cursor: not-allowed;
-  opacity: 0.6;
+  opacity: 0.5;
 }
 
 /* Variants */
 .primary {
-  background-color: var(--auth-primary);
+  background: var(--auth-primary);
   color: var(--auth-primary-foreground);
   border-color: var(--auth-primary);
+  box-shadow: 0 2px 8px -2px var(--auth-primary);
 }
 
 .primary:hover:not(:disabled) {
-  background-color: var(--auth-primary);
+  background: var(--auth-primary);
   opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px -3px var(--auth-primary);
+}
+
+.primary:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .secondary {
-  background-color: var(--auth-secondary);
+  background: var(--auth-secondary);
   color: var(--auth-secondary-foreground);
-  border-color: var(--auth-secondary);
+  border-color: var(--auth-border);
 }
 
 .secondary:hover:not(:disabled) {
-  background-color: var(--auth-secondary);
-  opacity: 0.8;
+  background: var(--auth-muted);
+  border-color: var(--auth-border);
 }
 
 .outline {
-  background-color: transparent;
+  background: transparent;
   color: var(--auth-foreground);
   border-color: var(--auth-border);
 }
 
 .outline:hover:not(:disabled) {
-  background-color: var(--auth-muted);
-  border-color: var(--auth-border-focus);
+  background: var(--auth-muted);
+  border-color: var(--auth-primary);
+  color: var(--auth-foreground);
 }
 
 .ghost {
-  background-color: transparent;
+  background: transparent;
   color: var(--auth-foreground);
   border-color: transparent;
 }
 
 .ghost:hover:not(:disabled) {
-  background-color: var(--auth-muted);
+  background: var(--auth-muted);
 }
 
 /* Sizes */

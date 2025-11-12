@@ -15,6 +15,8 @@ import { ForgotPassword } from "./auth/ForgotPassword";
 import { ResetPassword } from "./auth/ResetPassword";
 import { Success } from "./auth/Success";
 import { TabButton } from "./auth/ui";
+import { ShadowDOMPortal } from "./ShadowDOMPortal";
+import { allStyles } from "../lib/styles";
 import styles from "./AuthModal.module.css";
 
 type View = "connect" | "login" | "signup" | "forgot" | "reset" | "success";
@@ -119,147 +121,153 @@ export function AuthModal({
   // Show the new ConnectModal for the main wallet connection experience
   if (view === "connect") {
     return (
-      <div className="auth-container">
-        <ConnectModal
-          open={open}
-          onClose={close}
-          onStellarConnect={handleStellarSignIn}
-          onSocialConnect={async (provider) => {
-            if (provider === "google") {
-              await signInWithGoogle();
-            }
-          }}
-          loading={loading}
-          selectedWallet={selectedWallet}
-        />
-      </div>
+      <ShadowDOMPortal css={allStyles}>
+        <div className="auth-container">
+          <ConnectModal
+            open={open}
+            onClose={close}
+            onStellarConnect={handleStellarSignIn}
+            onSocialConnect={async (provider) => {
+              if (provider === "google") {
+                await signInWithGoogle();
+              }
+            }}
+            loading={loading}
+            selectedWallet={selectedWallet}
+          />
+        </div>
+      </ShadowDOMPortal>
     );
   }
 
   return (
-    <div className="auth-container">
-      <div className={styles.overlay}>
-        <div className={styles.modal}>
-          <div className={styles.header}>
-            <h2 className={styles.title}>Connect</h2>
-            <button onClick={close} className={styles.closeButton}>
-              ✕
-            </button>
-          </div>
+    <ShadowDOMPortal css={allStyles}>
+      <div className="auth-container">
+        <div className={styles.overlay}>
+          <div className={styles.modal}>
+            <div className={styles.header}>
+              <h2 className={styles.title}>Connect</h2>
+              <button onClick={close} className={styles.closeButton}>
+                ✕
+              </button>
+            </div>
 
-          <div className={styles.socialLogin}>
-            <Button
-              variant="outline"
-              className="w-full"
-              onClick={signInWithGoogle}
-              disabled={loading}
-            >
-              Continue with Google
-            </Button>
-          </div>
-          <div className={styles.stellarLogin}>
-            <p className={styles.stellarTitle}>Continue with Stellar</p>
-            <div className={styles.stellarButtons}>
+            <div className={styles.socialLogin}>
               <Button
                 variant="outline"
-                onClick={() => handleStellarSignIn("albedo")}
+                className="w-full"
+                onClick={signInWithGoogle}
                 disabled={loading}
               >
-                {loading && selectedWallet === "albedo"
-                  ? "Connecting..."
-                  : "Albedo"}
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => handleStellarSignIn("xbull")}
-                disabled={loading}
-              >
-                {loading && selectedWallet === "xbull"
-                  ? "Connecting..."
-                  : "xBull"}
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => handleStellarSignIn("lobstr")}
-                disabled={loading}
-              >
-                {loading && selectedWallet === "lobstr"
-                  ? "Connecting..."
-                  : "Lobstr"}
+                Continue with Google
               </Button>
             </div>
+            <div className={styles.stellarLogin}>
+              <p className={styles.stellarTitle}>Continue with Stellar</p>
+              <div className={styles.stellarButtons}>
+                <Button
+                  variant="outline"
+                  onClick={() => handleStellarSignIn("albedo")}
+                  disabled={loading}
+                >
+                  {loading && selectedWallet === "albedo"
+                    ? "Connecting..."
+                    : "Albedo"}
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => handleStellarSignIn("xbull")}
+                  disabled={loading}
+                >
+                  {loading && selectedWallet === "xbull"
+                    ? "Connecting..."
+                    : "xBull"}
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => handleStellarSignIn("lobstr")}
+                  disabled={loading}
+                >
+                  {loading && selectedWallet === "lobstr"
+                    ? "Connecting..."
+                    : "Lobstr"}
+                </Button>
+              </div>
+            </div>
+
+            <div className={styles.divider}>
+              <div className={styles.dividerLine} />
+              <span>Or continue with email</span>
+              <div className={styles.dividerLine} />
+            </div>
+
+            <div className={styles.tabs}>
+              <TabButton
+                active={view === "login"}
+                onClick={() => setView("login")}
+              >
+                Login
+              </TabButton>
+              <TabButton
+                active={view === "signup"}
+                onClick={() => setView("signup")}
+              >
+                Sign Up
+              </TabButton>
+              <TabButton
+                active={view === "forgot"}
+                onClick={() => setView("forgot")}
+              >
+                Forgot
+              </TabButton>
+            </div>
+
+            {error && <p className={styles.error}>{error}</p>}
+            {message && <p className={styles.message}>{message}</p>}
+
+            {view === "signup" && (
+              <SignUp
+                authClient={authClient}
+                setView={setView}
+                setError={setError}
+                setMessage={setMessage}
+              />
+            )}
+
+            {view === "login" && (
+              <SignIn
+                authClient={authClient}
+                setView={setView}
+                setError={setError}
+                setMessage={setMessage}
+              />
+            )}
+
+            {view === "forgot" && (
+              <ForgotPassword
+                authClient={authClient}
+                setView={setView}
+                setError={setError}
+                setMessage={setMessage}
+              />
+            )}
+
+            {view === "reset" && resetToken && (
+              <ResetPassword
+                authClient={authClient}
+                setView={setView}
+                setError={setError}
+                setMessage={setMessage}
+                resetToken={resetToken}
+              />
+            )}
+
+            {view === "success" && (
+              <Success message={message} onClose={close} />
+            )}
           </div>
-
-          <div className={styles.divider}>
-            <div className={styles.dividerLine} />
-            <span>Or continue with email</span>
-            <div className={styles.dividerLine} />
-          </div>
-
-          <div className={styles.tabs}>
-            <TabButton
-              active={view === "login"}
-              onClick={() => setView("login")}
-            >
-              Login
-            </TabButton>
-            <TabButton
-              active={view === "signup"}
-              onClick={() => setView("signup")}
-            >
-              Sign Up
-            </TabButton>
-            <TabButton
-              active={view === "forgot"}
-              onClick={() => setView("forgot")}
-            >
-              Forgot
-            </TabButton>
-          </div>
-
-          {error && <p className={styles.error}>{error}</p>}
-          {message && <p className={styles.message}>{message}</p>}
-
-          {view === "signup" && (
-            <SignUp
-              authClient={authClient}
-              setView={setView}
-              setError={setError}
-              setMessage={setMessage}
-            />
-          )}
-
-          {view === "login" && (
-            <SignIn
-              authClient={authClient}
-              setView={setView}
-              setError={setError}
-              setMessage={setMessage}
-            />
-          )}
-
-          {view === "forgot" && (
-            <ForgotPassword
-              authClient={authClient}
-              setView={setView}
-              setError={setError}
-              setMessage={setMessage}
-            />
-          )}
-
-          {view === "reset" && resetToken && (
-            <ResetPassword
-              authClient={authClient}
-              setView={setView}
-              setError={setError}
-              setMessage={setMessage}
-              resetToken={resetToken}
-            />
-          )}
-
-          {view === "success" && <Success message={message} onClose={close} />}
         </div>
       </div>
-    </div>
+    </ShadowDOMPortal>
   );
 }

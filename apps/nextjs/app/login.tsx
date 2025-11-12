@@ -4,10 +4,9 @@ import { authClient } from "@/lib/auth-client";
 import { useState } from "react";
 
 import { AuthModal } from "@action-auth/sdk";
-import "@action-auth/sdk/styles"; // ← Cleaner import!
 
 export function Login() {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const user = authClient.useSession();
   const handleLogin = () =>
     authClient.signIn
@@ -63,6 +62,7 @@ export function Login() {
       <div>
         <button onClick={handleApiCall}> call a nextjs api router</button>
       </div>
+      <button onClick={() => setOpen(true)}>Connect wallet</button>
       <AuthModal open={open} onClose={() => setOpen(false)} />
     </div>
   );

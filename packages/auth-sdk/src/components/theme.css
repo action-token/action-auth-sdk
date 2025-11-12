@@ -1,0 +1,75 @@
+/* 
+  Auth SDK Theme System
+  Works in Shadow DOM with automatic dark/light mode detection
+*/
+
+/* Root-level theme variables - injected into shadow root */
+:host,
+:root {
+  /* Light Mode (Default) */
+  --auth-background: #ffffff;
+  --auth-foreground: #0a0a0a;
+  --auth-muted: #f5f5f5;
+  --auth-muted-foreground: #6b7280;
+  --auth-border: #e5e7eb;
+  --auth-input: #ffffff;
+  --auth-primary: #6366f1;
+  --auth-primary-foreground: #ffffff;
+  --auth-secondary: #f3f4f6;
+  --auth-secondary-foreground: #0a0a0a;
+  --auth-accent: #f3f4f6;
+  --auth-accent-foreground: #0a0a0a;
+  --auth-destructive: #ef4444;
+  --auth-destructive-foreground: #ffffff;
+  --auth-success: #10b981;
+  --auth-success-foreground: #ffffff;
+  --auth-ring: #6366f1;
+  --auth-overlay: rgba(0, 0, 0, 0.7);
+}
+
+/* Dark Mode Detection via prefers-color-scheme */
+@media (prefers-color-scheme: dark) {
+  :host,
+  :root {
+    --auth-background: #0a0a0a;
+    --auth-foreground: #fafafa;
+    --auth-muted: #1a1a1a;
+    --auth-muted-foreground: #a1a1aa;
+    --auth-border: #27272a;
+    --auth-input: #18181b;
+    --auth-primary: #818cf8;
+    --auth-primary-foreground: #0a0a0a;
+    --auth-secondary: #27272a;
+    --auth-secondary-foreground: #fafafa;
+    --auth-accent: #27272a;
+    --auth-accent-foreground: #fafafa;
+    --auth-destructive: #dc2626;
+    --auth-destructive-foreground: #fafafa;
+    --auth-success: #059669;
+    --auth-success-foreground: #fafafa;
+    --auth-ring: #818cf8;
+    --auth-overlay: rgba(0, 0, 0, 0.85);
+  }
+}
+
+/* Global reset for shadow DOM */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Base container styles */
+.auth-container {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--auth-foreground);
+  line-height: 1.5;
+}
+
+/* Ensure proper text rendering */
+button, input, select, textarea {
+  font-family: inherit;
+  color: inherit;
+}
