@@ -1,6 +1,6 @@
 {
   "name": "@action-auth/sdk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -18,7 +18,7 @@
   "scripts": {
     "build": "vite build",
     "pack": "npm pack",
-    "deploy": "bun run build && npm pack && cd ../../apps/nextjs && bun remove @action-auth/sdk && bun add ../../packages/auth-sdk/action-auth-sdk-0.1.0.tgz"
+    "deploy": "bun run build && npm pack && cd ../../apps/nextjs && bun remove @action-auth/sdk && bun add ../../packages/auth-sdk/action-auth-sdk-0.1.1.tgz"
   },
   "peerDependencies": {
     "react": "^18.0.0",
