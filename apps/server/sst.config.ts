@@ -3,7 +3,7 @@
 export default $config({
   app(input) {
     return {
-      name: "aws-hono",
+      name: "action-auth-server",
       removal: input?.stage === "production" ? "retain" : "remove",
       home: "aws",
       version: "3.17.10",
@@ -14,7 +14,7 @@ export default $config({
     // const BETTER_AUTH_URL =
     //   "https://6pmchmr7hbk3pa67v65zanflre0kaiyo.lambda-url.us-west-2.on.aws"; // Base URL of your app
     const BETTER_AUTH_URL =
-      "https://izghhhbd7grhvtqs22umfilgqm0twtjn.lambda-url.us-east-2.on.aws/";
+      "https://zg5nz4f7pbvxlgeycnuwjpy2cy0bigya.lambda-url.us-east-2.on.aws/";
     const GOOGLE_CLIENT_ID =
       "234736501290-tfmjg2o7rtudogs630fq6ahjfemkkrfk.apps.googleusercontent.com";
 
