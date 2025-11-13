@@ -1,6 +1,9 @@
 {
   "name": "action-auth-sdk",
   "type": "module",
+  "scripts": {
+    "sst:deploy": "cd apps/server && bun sst:deploy"
+  },
   "devDependencies": {},
   "peerDependencies": {
     "typescript": "^5.0.0"
