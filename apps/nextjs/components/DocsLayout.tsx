@@ -47,11 +47,7 @@ const navigation = [
   },
   {
     title: "Examples",
-    links: [
-      { title: "Basic Usage", href: "/docs/examples" },
-      { title: "Protected Routes", href: "/docs/examples/protected-routes" },
-      { title: "Custom Styling", href: "/docs/examples/styling" },
-    ],
+    links: [{ title: "Basic Usage", href: "/docs/examples" }],
   },
 ];
 

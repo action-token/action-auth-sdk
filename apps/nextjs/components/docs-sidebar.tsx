@@ -31,7 +31,10 @@ const navigation = [
   },
   {
     title: "Resources",
-    items: [{ title: "Examples", href: "/docs/examples" }],
+    items: [
+      { title: "Examples", href: "/docs/examples" },
+      { title: "Live Demo", href: "/demo" },
+    ],
   },
 ];
 

@@ -5,6 +5,10 @@
 
 declare module "sst" {
   export interface Resource {
+    "BETTER_AUTH_SECRET": {
+      "type": "sst.sst.Secret"
+      "value": string
+    }
     "GOOGLE_CLIENT_SECRET": {
       "type": "sst.sst.Secret"
       "value": string

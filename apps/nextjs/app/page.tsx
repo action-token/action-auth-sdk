@@ -59,6 +59,14 @@ export default function Home() {
             </Button>
             <Button
               asChild
+              size="lg"
+              variant="secondary"
+              className="text-base px-8"
+            >
+              <Link href="/demo">Try Live Demo</Link>
+            </Button>
+            <Button
+              asChild
               variant="outline"
               size="lg"
               className="text-base px-8"
