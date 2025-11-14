@@ -10,7 +10,6 @@ export default $config({
     };
   },
   async run() {
-    const BETTER_AUTH_SECRET = "vongcong";
     // const BETTER_AUTH_URL =
     //   "https://6pmchmr7hbk3pa67v65zanflre0kaiyo.lambda-url.us-west-2.on.aws"; // Base URL of your app
     const BETTER_AUTH_URL =
@@ -23,6 +22,7 @@ export default $config({
     const authToken = new sst.Secret("TURSO_AUTH_TOKEN");
     const googleClientSecret = new sst.Secret("GOOGLE_CLIENT_SECRET");
     const stellarServerSecret = new sst.Secret("STELLAR_SERVER_SECRET");
+    const betterAuthSecret = new sst.Secret("BETTER_AUTH_SECRET");
 
     new sst.aws.Function("Hono", {
       url: {
@@ -44,7 +44,7 @@ export default $config({
       link: [dbUrl, authToken, googleClientSecret, stellarServerSecret],
       handler: "src/index.handler",
       environment: {
-        BETTER_AUTH_SECRET,
+        BETTER_AUTH_SECRET: betterAuthSecret.value,
         BETTER_AUTH_URL,
         TURSO_DATABASE_URL: dbUrl.value,
         TURSO_AUTH_TOKEN: authToken.value,

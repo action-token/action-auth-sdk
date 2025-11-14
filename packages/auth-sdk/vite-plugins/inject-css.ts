@@ -1,6 +1,5 @@
-import type { Plugin } from "vite";
-import { readFileSync } from "fs";
 import { resolve } from "path";
+import type { Plugin } from "vite";
 
 export function injectCSSPlugin(): Plugin {
   return {
