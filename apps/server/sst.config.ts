@@ -25,22 +25,23 @@ export default $config({
     const betterAuthSecret = new sst.Secret("BETTER_AUTH_SECRET");
 
     new sst.aws.Function("Hono", {
-      url: {
-        cors: {
-          allowCredentials: true,
-          allowOrigins: [
-            "http://localhost:5173",
-            "http://localhost:3000",
-            "http://10.12.24.55:3000",
-            "https://92049f4cfa12.ngrok-free.app",
-            "https://ce01979be39f.ngrok-free.app",
-            "https://396d7p7k-3000.asse.devtunnels.ms",
-          ],
-          allowHeaders: ["content-type", "authorization"],
-          allowMethods: ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"],
-          maxAge: "1 day",
-        },
-      },
+      // url: {
+      //   cors: {
+      //     allowCredentials: true,
+      //     allowOrigins: [
+      //       "http://localhost:5173",
+      //       "http://localhost:3000",
+      //       "http://10.12.24.55:3000",
+      //       "https://92049f4cfa12.ngrok-free.app",
+      //       "https://ce01979be39f.ngrok-free.app",
+      //       "https://396d7p7k-3000.asse.devtunnels.ms",
+      //     ],
+      //     allowHeaders: ["content-type", "authorization"],
+      //     allowMethods: ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"],
+      //     maxAge: "1 day",
+      //   },
+      // },
+      url: { cors: false },
       link: [dbUrl, authToken, googleClientSecret, stellarServerSecret],
       handler: "src/index.handler",
       environment: {
