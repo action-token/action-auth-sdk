@@ -3,7 +3,7 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { createAuthMiddleware } from "better-auth/api";
 import { db } from "../db"; // your drizzle instance
 import { stellar } from "./plugins/stellar";
-import { jwt } from "better-auth/plugins";
+import { jwt, bearer } from "better-auth/plugins";
 // import { expo } from "@better-auth/expo";
 
 // Custodial server service
@@ -37,6 +37,7 @@ export const auth = betterAuth({
   plugins: [
     // expo(),
     jwt(),
+    bearer(),
     stellar({
       network: (process.env.STELLAR_NETWORK as any) || "TESTNET",
       serverSecret: process.env.STELLAR_SERVER_SECRET as string,

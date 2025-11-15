@@ -186,42 +186,46 @@ export default function DemoPage() {
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    <div className="p-4 bg-muted rounded-lg text-center">
-                      <p className="text-sm text-muted-foreground mb-4">
-                        Not authenticated. Choose a method to sign in:
-                      </p>
-                    </div>
-
-                    <Button
-                      onClick={() => setOpen(true)}
-                      className="w-full"
-                      size="lg"
-                    >
-                      Open Auth Modal (All Methods)
-                    </Button>
-
-                    <div className="relative">
-                      <div className="absolute inset-0 flex items-center">
-                        <Separator />
+                    <div>
+                      <div className="p-4 bg-muted rounded-lg text-center">
+                        <p className="text-sm text-muted-foreground mb-4">
+                          {session.isPending
+                            ? "Loading..."
+                            : "Not authenticated. Choose a method to sign in"}
+                        </p>
                       </div>
-                      <div className="relative flex justify-center text-xs uppercase">
-                        <span className="bg-background px-2 text-muted-foreground">
-                          Or try direct
-                        </span>
-                      </div>
-                    </div>
 
-                    <Button
-                      onClick={handleGoogleLogin}
-                      variant="outline"
-                      className="w-full"
-                      disabled={isSigningIn}
-                    >
-                      {isSigningIn && (
-                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      )}
-                      {isSigningIn ? "Signing in..." : "Sign in with Google"}
-                    </Button>
+                      <Button
+                        onClick={() => setOpen(true)}
+                        className="w-full"
+                        size="lg"
+                      >
+                        Open Auth Modal (All Methods)
+                      </Button>
+
+                      <div className="relative">
+                        <div className="absolute inset-0 flex items-center">
+                          <Separator />
+                        </div>
+                        <div className="relative flex justify-center text-xs uppercase">
+                          <span className="bg-background px-2 text-muted-foreground">
+                            Or try direct
+                          </span>
+                        </div>
+                      </div>
+
+                      <Button
+                        onClick={handleGoogleLogin}
+                        variant="outline"
+                        className="w-full"
+                        disabled={isSigningIn}
+                      >
+                        {isSigningIn && (
+                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        )}
+                        {isSigningIn ? "Signing in..." : "Sign in with Google"}
+                      </Button>
+                    </div>
                   </div>
                 )}
               </CardContent>
