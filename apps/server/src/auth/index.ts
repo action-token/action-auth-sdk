@@ -4,6 +4,8 @@ import { createAuthMiddleware } from "better-auth/api";
 import { db } from "../db"; // your drizzle instance
 import { stellar } from "./plugins/stellar";
 import { jwt, bearer } from "better-auth/plugins";
+import { allowedOrigins as allowedOriginsTable } from "../db/schema/admin-schema";
+import { eq } from "drizzle-orm";
 // import { expo } from "@better-auth/expo";
 
 // Custodial server service
@@ -31,6 +33,38 @@ class CustodialService {
     }
   }
 }
+
+/**
+ * Fetch allowed origins from database
+ */
+async function getTrustedOrigins(): Promise<string[]> {
+  try {
+    const origins = await db
+      .select({ origin: allowedOriginsTable.origin })
+      .from(allowedOriginsTable)
+      .where(eq(allowedOriginsTable.isActive, true));
+
+    return origins.map((o) => o.origin);
+  } catch (error) {
+    console.error("Failed to fetch trusted origins from database:", error);
+    return [];
+  }
+}
+
+// Static origins that should always be allowed
+const staticTrustedOrigins = [
+  "myapp://",
+  "http://localhost:8081",
+  "http://localhost:5173",
+  "http://localhost:3000",
+  "http://10.12.24.55:3000",
+];
+
+// Fetch database origins at startup
+const dbOrigins = await getTrustedOrigins();
+const allTrustedOrigins = [...staticTrustedOrigins, ...dbOrigins];
+
+// console.log("Better Auth trusted origins:", allTrustedOrigins);
 
 export const auth = betterAuth({
   // Register Stellar plugin (minimal SEP-10)
@@ -193,15 +227,7 @@ export const auth = betterAuth({
       }
     }),
   },
-  trustedOrigins: [
-    "myapp://",
-    "http://localhost:8081",
-    "http://localhost:5173",
-    "http://localhost:3000",
-    "http://10.12.24.55:3000",
-    "https://92049f4cfa12.ngrok-free.app",
-    "https://ce01979be39f.ngrok-free.app",
-  ],
+  trustedOrigins: allTrustedOrigins,
   advanced: {
     defaultCookieAttributes: {
       sameSite: "None", // Use "None" for cross-origin

@@ -24,6 +24,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { authenticatedFetch } from "@/lib/admin-api";
+import { toast } from "sonner";
 
 interface Project {
   id: string;
@@ -39,6 +40,7 @@ export default function ProjectsPage() {
   const [loading, setLoading] = useState(true);
   const [showDialog, setShowDialog] = useState(false);
   const [newProject, setNewProject] = useState({ name: "", ownerEmail: "" });
+  const [isCreating, setIsCreating] = useState(false);
 
   useEffect(() => {
     fetchProjects();
@@ -60,10 +62,11 @@ export default function ProjectsPage() {
 
   const createProject = async () => {
     if (!newProject.name) {
-      alert("Project name is required");
+      toast.error("Project name is required");
       return;
     }
 
+    setIsCreating(true);
     try {
       const response = await authenticatedFetch("/api/admin/projects", {
         method: "POST",
@@ -71,16 +74,19 @@ export default function ProjectsPage() {
       });
 
       if (response.ok) {
+        toast.success("Project created successfully");
         setShowDialog(false);
         setNewProject({ name: "", ownerEmail: "" });
         fetchProjects();
       } else {
         const error = await response.json();
-        alert(error.error || "Failed to create project");
+        toast.error(error.error || "Failed to create project");
       }
     } catch (error) {
       console.error("Failed to create project:", error);
-      alert("Failed to create project");
+      toast.error("Failed to create project");
+    } finally {
+      setIsCreating(false);
     }
   };
 
@@ -94,10 +100,16 @@ export default function ProjectsPage() {
       });
 
       if (response.ok) {
+        toast.success(
+          `Project ${newStatus === "active" ? "activated" : "suspended"}`
+        );
         fetchProjects();
+      } else {
+        toast.error("Failed to update project status");
       }
     } catch (error) {
       console.error("Failed to update project:", error);
+      toast.error("Failed to update project status");
     }
   };
 
@@ -110,10 +122,14 @@ export default function ProjectsPage() {
       });
 
       if (response.ok) {
+        toast.success("Project deleted successfully");
         fetchProjects();
+      } else {
+        toast.error("Failed to delete project");
       }
     } catch (error) {
       console.error("Failed to delete project:", error);
+      toast.error("Failed to delete project");
     }
   };
 
@@ -178,7 +194,9 @@ export default function ProjectsPage() {
                 <Button variant="outline" onClick={() => setShowDialog(false)}>
                   Cancel
                 </Button>
-                <Button onClick={createProject}>Create Project</Button>
+                <Button onClick={createProject} disabled={isCreating}>
+                  {isCreating ? "Creating..." : "Create Project"}
+                </Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>

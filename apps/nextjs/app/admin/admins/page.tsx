@@ -18,6 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { authenticatedFetch } from "@/lib/admin-api";
+import { toast } from "sonner";
 
 interface Admin {
   id: string;
@@ -31,6 +32,7 @@ export default function AdminsPage() {
   const [loading, setLoading] = useState(true);
   const [showDialog, setShowDialog] = useState(false);
   const [newAdmin, setNewAdmin] = useState({ email: "", role: "admin" });
+  const [isAdding, setIsAdding] = useState(false);
 
   useEffect(() => {
     fetchAdmins();
@@ -52,10 +54,11 @@ export default function AdminsPage() {
 
   const addAdmin = async () => {
     if (!newAdmin.email) {
-      alert("Email is required");
+      toast.error("Email is required");
       return;
     }
 
+    setIsAdding(true);
     try {
       const response = await authenticatedFetch("/api/admin/admins", {
         method: "POST",
@@ -63,16 +66,19 @@ export default function AdminsPage() {
       });
 
       if (response.ok) {
+        toast.success("Admin added successfully");
         setShowDialog(false);
         setNewAdmin({ email: "", role: "admin" });
         fetchAdmins();
       } else {
         const error = await response.json();
-        alert(error.error || "Failed to add admin");
+        toast.error(error.error || "Failed to add admin");
       }
     } catch (error) {
       console.error("Failed to add admin:", error);
-      alert("Failed to add admin");
+      toast.error("Failed to add admin");
+    } finally {
+      setIsAdding(false);
     }
   };
 
@@ -85,14 +91,15 @@ export default function AdminsPage() {
       });
 
       if (response.ok) {
+        toast.success("Admin removed successfully");
         fetchAdmins();
       } else {
         const error = await response.json();
-        alert(error.error || "Failed to delete admin");
+        toast.error(error.error || "Failed to delete admin");
       }
     } catch (error) {
       console.error("Failed to delete admin:", error);
-      alert("Failed to delete admin");
+      toast.error("Failed to delete admin");
     }
   };
 
@@ -163,7 +170,9 @@ export default function AdminsPage() {
                 <Button variant="outline" onClick={() => setShowDialog(false)}>
                   Cancel
                 </Button>
-                <Button onClick={addAdmin}>Add Admin</Button>
+                <Button onClick={addAdmin} disabled={isAdding}>
+                  {isAdding ? "Adding..." : "Add Admin"}
+                </Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>

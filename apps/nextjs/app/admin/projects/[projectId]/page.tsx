@@ -19,6 +19,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { authenticatedFetch } from "@/lib/admin-api";
+import { toast } from "sonner";
 
 interface Project {
   id: string;
@@ -48,6 +49,7 @@ export default function ProjectDetailPage() {
     origin: "",
     environment: "production",
   });
+  const [isAdding, setIsAdding] = useState(false);
 
   useEffect(() => {
     if (projectId) {
@@ -74,10 +76,11 @@ export default function ProjectDetailPage() {
 
   const addOrigin = async () => {
     if (!newOrigin.origin) {
-      alert("Origin URL is required");
+      toast.error("Origin URL is required");
       return;
     }
 
+    setIsAdding(true);
     try {
       const response = await authenticatedFetch("/api/admin/origins", {
         method: "POST",
@@ -88,16 +91,19 @@ export default function ProjectDetailPage() {
       });
 
       if (response.ok) {
+        toast.success("Origin added successfully");
         setShowDialog(false);
         setNewOrigin({ origin: "", environment: "production" });
         fetchProject();
       } else {
         const error = await response.json();
-        alert(error.error || "Failed to add origin");
+        toast.error(error.error || "Failed to add origin");
       }
     } catch (error) {
       console.error("Failed to add origin:", error);
-      alert("Failed to add origin");
+      toast.error("Failed to add origin");
+    } finally {
+      setIsAdding(false);
     }
   };
 
@@ -109,10 +115,14 @@ export default function ProjectDetailPage() {
       });
 
       if (response.ok) {
+        toast.success(`Origin ${!currentStatus ? "activated" : "deactivated"}`);
         fetchProject();
+      } else {
+        toast.error("Failed to update origin");
       }
     } catch (error) {
       console.error("Failed to toggle origin:", error);
+      toast.error("Failed to update origin");
     }
   };
 
@@ -125,10 +135,14 @@ export default function ProjectDetailPage() {
       });
 
       if (response.ok) {
+        toast.success("Origin deleted successfully");
         fetchProject();
+      } else {
+        toast.error("Failed to delete origin");
       }
     } catch (error) {
       console.error("Failed to delete origin:", error);
+      toast.error("Failed to delete origin");
     }
   };
 
@@ -225,7 +239,9 @@ export default function ProjectDetailPage() {
                   >
                     Cancel
                   </Button>
-                  <Button onClick={addOrigin}>Add Origin</Button>
+                  <Button onClick={addOrigin} disabled={isAdding}>
+                    {isAdding ? "Adding..." : "Add Origin"}
+                  </Button>
                 </DialogFooter>
               </DialogContent>
             </Dialog>
